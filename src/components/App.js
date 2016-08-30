@@ -13,11 +13,30 @@ class App extends Component {
   }
 
   componentDidMount () {
-    window.fetch(`${API_URL}/games?difficulty=0`, {
+    const gameId = window.localStorage.getItem('gameId')
+    if (gameId) {
+      window.fetch(`${API_URL}/games/${gameId}`)
+      .then((response) => {
+        return response.json()
+      }).then((data) => {
+        if (data.state === 'won' || data.state === 'lost') {
+          this.createGame()
+        } else {
+          this.setState(data)
+        }
+      })
+    } else {
+      this.createGame()
+    }
+  }
+
+  createGame () {
+    window.fetch(`${API_URL}/games?difficulty=1`, {
       method: 'POST'
     }).then((response) => {
       return response.json()
     }).then((data) => {
+      window.localStorage.setItem('gameId', data.id)
       this.setState(data)
     })
   }
