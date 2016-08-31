@@ -11,7 +11,6 @@ class App extends Component {
       difficulty: 0
     }
   }
-
   changePage = (scr, difficulty) => {
     this.setState({
       currentScreen: scr,
@@ -24,7 +23,7 @@ class App extends Component {
     switch (this.state.currentScreen) {
       case 'Home': screen = <Home navigate={this.changePage} />
         break
-      case 'game': screen = <Game difficulty={this.state.difficulty} />
+      case 'Game': screen = <Game difficulty={this.state.difficulty} />
         break
       default: screen = <Home navigate={this.changePage} />
     }
